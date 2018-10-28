@@ -1,0 +1,60 @@
+!
+hostname dc-sec-l2edge
+!
+ip multicast-routing distributed
+!
+redundancy
+bridge-domain 20 
+ member vni 8000
+ member GigabitEthernet2 service-instance 8000
+!
+interface Loopback0
+ ip address 3.3.3.3 255.255.255.255
+ ip pim sparse-mode
+ ip ospf 255 area 0.0.0.0
+!
+interface GigabitEthernet1
+ ip address 10.10.10.2 255.255.255.252
+ ip pim sparse-mode
+ ip ospf 255 area 0.0.0.0
+ negotiation auto
+ medium p2p
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ service instance 8000 ethernet
+  encapsulation untagged
+ !
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!         
+interface GigabitEthernet4
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface nve1
+ no ip address
+ source-interface Loopback0
+ member vni 8000 mcast-group 239.10.10.2
+ no mop enabled
+ no mop sysid
+!
+router ospf 255
+ router-id 3.3.3.3
+!
+ip pim bidir-enable
+ip pim rp-address 1.1.1.1 bidir
+!

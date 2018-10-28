@@ -1,0 +1,28 @@
+!
+hostname dc-pri-l2
+!
+vlan 10
+name VLAN10
+!
+vlan 20
+name VLAN20
+!
+interface GigabitEthernet0/0
+ switchport trunk allowed vlan 10,20
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1
+ switchport access vlan 10
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/2
+ switchport access vlan 20
+ switchport mode access
+ media-type rj45
+ negotiation auto
+!

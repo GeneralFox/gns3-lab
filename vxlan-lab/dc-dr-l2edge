@@ -1,0 +1,60 @@
+!
+hostname dc-dr-l2edge
+!
+ip multicast-routing distributed
+!
+redundancy
+bridge-domain 10 
+ member vni 12200
+ member GigabitEthernet4 service-instance 10
+!
+interface Loopback0
+ ip address 2.2.2.2 255.255.255.255
+ ip pim sparse-mode
+ ip ospf 255 area 0.0.0.0
+!
+interface GigabitEthernet1
+ description to -pri-edge
+ ip address 10.0.0.2 255.255.255.252
+ ip pim sparse-mode
+ ip ospf 255 area 0.0.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ service instance 10 ethernet
+  encapsulation untagged
+ !
+!
+interface nve1
+ no ip address
+ source-interface Loopback0
+ member vni 12200 mcast-group 239.10.10.1
+ no mop enabled
+ no mop sysid
+!
+router ospf 255
+ router-id 2.2.2.2
+!r
+ip pim bidir-enable
+ip pim rp-address 1.1.1.1 bidir
+!
