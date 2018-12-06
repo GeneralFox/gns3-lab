@@ -1,5 +1,7 @@
 FR HUB&SPOKE LAB
+
 R1-R2-R3 C1700 12.4(25)
 FR-SW C3745 12.4(15)
+
 R1-R3 eigrp
 R2 static route
