@@ -1,0 +1,32 @@
+!
+hostname FR-SW
+!
+no ip routing
+!
+frame-relay switching
+!
+interface Serial0/0
+ no ip address
+ encapsulation frame-relay
+ no ip route-cache
+ clock rate 2000000
+ frame-relay intf-type dce
+ frame-relay route 122 interface Serial0/1 221
+ frame-relay route 123 interface Serial0/2 321
+!
+interface Serial0/1
+ no ip address
+ encapsulation frame-relay
+ no ip route-cache
+ clock rate 2000000
+ frame-relay intf-type dce
+ frame-relay route 221 interface Serial0/0 122
+!
+interface Serial0/2
+ no ip address
+ encapsulation frame-relay
+ no ip route-cache
+ clock rate 2000000
+ frame-relay intf-type dce
+ frame-relay route 321 interface Serial0/0 123
+!
