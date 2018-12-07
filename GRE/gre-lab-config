@@ -1,0 +1,76 @@
+#############################
+ISP
+#############################
+!
+hostname ISP
+!
+interface GigabitEthernet0/0
+ ip address 1.1.1.2 255.0.0.0
+ duplex auto
+ speed auto
+ media-type rj45
+!         
+interface GigabitEthernet0/1
+ ip address 2.2.2.2 255.0.0.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+#############################
+R1
+#############################
+!
+hostname R1
+!
+interface Tunnel0
+ ip address 192.168.1.1 255.255.255.0
+ tunnel source GigabitEthernet0/0
+ tunnel destination 2.2.2.1
+!
+interface GigabitEthernet0/0
+ ip address 1.1.1.1 255.0.0.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ ip address 192.168.101.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router eigrp 100
+ network 192.168.1.0
+ network 192.168.101.0
+!
+ip route 0.0.0.0 0.0.0.0 1.1.1.2
+!
+#############################
+R2
+#############################
+!
+hostname R2
+!
+interface Tunnel0
+ ip address 192.168.1.2 255.255.255.0
+ tunnel source GigabitEthernet0/0
+ tunnel destination 1.1.1.1
+!
+interface GigabitEthernet0/0
+ ip address 2.2.2.1 255.0.0.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/1
+ ip address 192.168.102.1 255.255.255.0
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router eigrp 100
+ network 192.168.1.0
+ network 192.168.102.0
+!
+ip route 0.0.0.0 0.0.0.0 2.2.2.2
+!
